@@ -1,5 +1,6 @@
 import sys
 import os
+import io
 import time
 import shutil
 from pathlib import Path
@@ -102,20 +103,50 @@ def runStreamlit():
             st.subheader("口算题识别")
             tempImagePath, tempLabelPath = detect(image, tempFolder)
 
-            # 保存预测结果
-            st.button('点此保存预测结果', on_click=detectRes)
-            if st.session_state.detectRes:
-                if not os.path.exists(saveFolder):  # 检查文件夹是否存在，如果不存在则创建
-                    os.makedirs(saveFolder)
+            detectImageName = image.name.replace('.jpg', '_detect.jpg')
+            detectLabelName = detectImageName.replace('.jpg', '.txt')
+            # 读取二进制文件
+            with open(tempLabelPath, 'rb') as file:
+                content = file.read()
 
-                # 生成预测结果图和标签的完整路径
-                saveImagePath = os.path.join(saveFolder, image.name.replace('.jpg', '_detect.jpg'))
-                saveLabelPath = saveImagePath.replace('.jpg', '.txt')
+            # 保存txt文件
+            st.download_button(
+                label="点此保存预测结果的txt文件",   # 按钮标签
+                data=content,                       # 文件的内容
+                file_name=detectLabelName,         # 下载时的文件名
+                mime="text/plain"                  # 文本文件
+            )
 
-                # 将文件从源路径复制到目标文件夹
-                shutil.copy(tempImagePath, saveImagePath)
-                shutil.copy(tempLabelPath, saveLabelPath)
-                st.write("已将预测结果保存至./res文件夹中! ")
+            image = Image.open(tempImagePath)   # 打开图片
+
+            # 将图片保存为字节流
+            imageByte = io.BytesIO()
+            image.save(imageByte, format='jpg')
+            imageByte.seek(0)
+
+            # 保存image
+            st.download_button(
+                label="点此保存预测结果的txt文件",   # 按钮标签
+                data=imageByte,                    # 文件的内容
+                file_name=detectImageName,         # 下载时的文件名
+                mime="image/jpg"                   # 图片文件
+            )
+
+
+            # # 保存预测结果
+            # st.button('点此保存预测结果', on_click=detectRes)
+            # if st.session_state.detectRes:
+            #     if not os.path.exists(saveFolder):  # 检查文件夹是否存在，如果不存在则创建
+            #         os.makedirs(saveFolder)
+
+            #     # 生成预测结果图和标签的完整路径
+            #     saveImagePath = os.path.join(saveFolder, image.name.replace('.jpg', '_detect.jpg'))
+            #     saveLabelPath = saveImagePath.replace('.jpg', '.txt')
+
+            #     # 将文件从源路径复制到目标文件夹
+            #     shutil.copy(tempImagePath, saveImagePath)
+            #     shutil.copy(tempLabelPath, saveLabelPath)
+            #     st.write("已将预测结果保存至./res文件夹中! ")
 
 
 
