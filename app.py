@@ -121,7 +121,7 @@ def runStreamlit():
 
             # 将图片保存为字节流
             imageByte = io.BytesIO()
-            image.save(imageByte, format='JEPG')
+            image.save(imageByte, format='JPEG')
             imageByte.seek(0)
 
             # 保存image
