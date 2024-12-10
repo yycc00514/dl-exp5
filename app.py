@@ -20,7 +20,7 @@ def detect(image, tempFolder):
     # st.write("Just a second ...")
 
     # 加载模型
-    model = YOLO('./ultralytics-main/runs/exp4/weights/best.pt')
+    model = YOLO('./best.pt')
     
     progressBar = st.progress(0)    # 显示进度条
     # img = image.copy()
