@@ -45,22 +45,6 @@ def detect(image, tempFolder):
     # 显示检测结果
     st.image(tempImagePath, caption=f"检测结果(用时{endTime - startTime: .2f}s)", width=300)
 
-    return tempImagePath, tempLabelPath
-    # if st.session_state.is_detected:
-    #     if st.button('点此保存预测结果'):
-    #         saveFolder = 'res'
-    #         if not os.path.exists(saveFolder):  # 检查文件夹是否存在，如果不存在则创建
-    #             os.makedirs(saveFolder)
-
-    #         # 生成预测结果图和标签的完整路径
-    #         saveImagePath = os.path.join(saveFolder, image.name + '_detect.jpg')
-    #         saveLabelPath = saveImagePath.replace('.jpg', '.txt')
-
-    #         # 将文件从源路径复制到目标文件夹
-    #         shutil.copy(tempImagePath, saveImagePath)
-    #         shutil.copy(tempLabelPath, saveLabelPath)
-    #         st.write("已将预测结果保存至./res文件夹中! ")
-
 
 def detectDone():
     st.session_state.detectDone = True
@@ -133,8 +117,3 @@ def runStreamlit():
 
 if __name__ == '__main__':
     runStreamlit()
-    # if runtime.exists():    
-    #     runStreamlit()
-    # else:
-    #     sys.argv = ["streamlit", "run", sys.argv[0]]
-    #     sys.exit(stcli.main())
