@@ -3,28 +3,19 @@ import os
 import io
 import time
 import shutil
-from pathlib import Path
-from ultralytics import YOLO
-from streamlit.web import cli as stcli
-import streamlit as st
-from streamlit import runtime
-import numpy as np
-from PIL import Image, ImageFont, ImageDraw
-import matplotlib.pyplot as plt
-import streamlit
 import atexit
+import numpy as np
+from PIL import Image
+import streamlit as st
+from ultralytics import YOLO
 
 
 # 进行yolo检测，呈现在web页面上
 def detect(image, tempFolder):
-    # st.subheader("Detected Image")
-    # st.write("Just a second ...")
-
     # 加载模型
     model = YOLO('./best.pt')
     
     progressBar = st.progress(0)    # 显示进度条
-    # img = image.copy()
     startTime = time.time()
     result = model.predict(os.path.join(tempFolder, image.name), conf=0.8)
     endTime = time.time()
@@ -81,7 +72,6 @@ def runStreamlit():
     
     # 创建临时文件夹
     tempFolder = "./temp"
-    saveFolder = "./res"
     if not os.path.exists(tempFolder):
         os.makedirs(tempFolder)
     
@@ -131,23 +121,6 @@ def runStreamlit():
                 file_name=detectImageName,         # 下载时的文件名
                 mime="image/jpg"                   # 图片文件
             )
-
-
-            # # 保存预测结果
-            # st.button('点此保存预测结果', on_click=detectRes)
-            # if st.session_state.detectRes:
-            #     if not os.path.exists(saveFolder):  # 检查文件夹是否存在，如果不存在则创建
-            #         os.makedirs(saveFolder)
-
-            #     # 生成预测结果图和标签的完整路径
-            #     saveImagePath = os.path.join(saveFolder, image.name.replace('.jpg', '_detect.jpg'))
-            #     saveLabelPath = saveImagePath.replace('.jpg', '.txt')
-
-            #     # 将文件从源路径复制到目标文件夹
-            #     shutil.copy(tempImagePath, saveImagePath)
-            #     shutil.copy(tempLabelPath, saveLabelPath)
-            #     st.write("已将预测结果保存至./res文件夹中! ")
-
 
 
 if __name__ == '__main__':
