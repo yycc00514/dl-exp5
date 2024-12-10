@@ -44,17 +44,20 @@ def detect(image, tempFolder):
     st.write("检测结果: ")
     # 显示检测结果
     st.image(tempImagePath, caption=f"检测结果(用时{endTime - startTime: .2f}s)", width=300)
+    return tempImagePath, tempLabelPath
 
 
+# 设置开始预测按钮的状态
 def detectDone():
     st.session_state.detectDone = True
 
 
+# 设置保存预测结果按钮的状态
 def detectRes():
     st.session_state.detectRes = True
 
 
-# 删除文件夹的函数
+# 运行结束后删除temp文件夹
 def delTempFolder():
     if os.path.exists('./temp'):
         shutil.rmtree('./temp')
