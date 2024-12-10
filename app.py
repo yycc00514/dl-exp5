@@ -66,7 +66,7 @@ def runStreamlit():
     # 注册程序退出时调用的清理函数
     atexit.register(delTempFolder)
 
-    st.title("口算题识别系统")
+    st.title("口算题检测系统")
     st.write("")
     image = st.file_uploader("请在此处上传一张.jpg格式的图片", type="jpg")
     
@@ -88,9 +88,9 @@ def runStreamlit():
         st.write("")
 
         # 开始模型预测
-        st.button('点此开始口算题识别', on_click=detectDone)
+        st.button('点此开始口算题检测', on_click=detectDone)
         if st.session_state.detectDone:
-            st.subheader("口算题识别")
+            st.subheader("口算题检测")
             tempImagePath, tempLabelPath = detect(image, tempFolder)
 
             detectImageName = image.name.replace('.jpg', '_detect.jpg')
@@ -116,7 +116,7 @@ def runStreamlit():
 
             # 保存image
             st.download_button(
-                label="点此保存预测结果的txt文件",   # 按钮标签
+                label="点此保存预测结果的jpg文件",   # 按钮标签
                 data=imageByte,                    # 文件的内容
                 file_name=detectImageName,         # 下载时的文件名
                 mime="image/jpg"                   # 图片文件
