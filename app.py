@@ -61,6 +61,7 @@ def delTempFolder():
 
 
 def runStreamlit():
+    print(os.getcwd())
     # 初始化 session_state
     if 'detectDone' not in st.session_state:
         st.session_state.detectDone = False
