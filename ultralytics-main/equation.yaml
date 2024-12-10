@@ -1,0 +1,9 @@
+path: dataset_200
+train: images/train
+val: images/val
+test: images/test
+ 
+
+# Classes
+names:
+  0: equation
